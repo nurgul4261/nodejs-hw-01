@@ -11,6 +11,6 @@ export const readContacts = async () => {
     }
 };
 
-readContacts();
+
 
 

@@ -9,6 +9,5 @@ export const writeContacts = async (updatedContacts) => {
     }
 };
 
-writeContacts();
 
 
