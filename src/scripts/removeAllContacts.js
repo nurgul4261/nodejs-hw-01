@@ -1,13 +1,12 @@
-import fs from 'fs/promises';
-import { PATH_DB } from '../constants/contacts.js';
+import { writeContacts } from '../utils/writeContacts.js';
 
 export const removeAllContacts = async () => {
-    try {
-        await fs.writeFile(PATH_DB, JSON.stringify([], null, 2), 'utf-8');
-        console.log('All contacts have been removed successfully!');
-    } catch (error) {
-        console.error('Error removing contacts:', error);
-    }
+  try {
+    await writeContacts([]);
+    console.log('All contacts have been successfully deleted.');
+  } catch (error) {
+    console.error('Error while deleting contacts:', error);
+  }
 };
 
 removeAllContacts();

@@ -1,18 +1,21 @@
-import fs from 'fs/promises';
-import { PATH_DB } from '../constants/contacts.js';
 import { createFakeContact } from '../utils/createFakeContact.js';
+import { readContacts } from '../utils/readContacts.js';
+import { writeContacts } from '../utils/writeContacts.js';
 
-const createFakeContacts = (count) => {
-  const contacts = [];
-  for (let i = 0; i < count; i++) {
-    contacts.push(createFakeContact());
+export const generateContacts = async (number) => {
+  try {
+    const existing = await readContacts();
+
+    const newContacts = Array.from({ length: number }).map(() => createFakeContact());
+    const merged = existing.concat(newContacts);
+
+    await writeContacts(merged);
+
+    const addedData = await readContacts();
+    console.log(addedData);
+  } catch (err) {
+    console.error('Error adding data to the file:', err);
   }
-  return contacts;
-};
-
-const generateContacts = async (count) => {
-  const contacts = createFakeContacts(count);
-  await fs.writeFile(PATH_DB, JSON.stringify(contacts, null, 2));
 };
 
 generateContacts(5);
